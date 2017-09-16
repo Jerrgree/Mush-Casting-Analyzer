@@ -18,12 +18,17 @@ function getCurrentTabUrl(callback)
 
 function AnalyzeResults(result)
 {
-	var ReadiedList = $('#readiedPlayers');
+  var readiedPlayers = result[0];
+  var idlePlayers = result[1];
+  var playingPlayers = result[2];
 
-	for (var i = 0; i < result.length; i++)
+  // Display Readied Players
+	var ReadiedList = $('#readiedPlayers');
+  ReadiedList.empty();
+  ReadiedList.append('Readied Players');
+	for (var i = 0; i < readiedPlayers.length; i++)
 	{
-		console.log(result[i]);
-		ReadiedList.append('<li>' + result[i].id + ', ' + result[i].name + '</li>');
+		ReadiedList.append('<li>' + readiedPlayers[i].id + ', ' + readiedPlayers[i].name + '</li>');
 	}
 }
 

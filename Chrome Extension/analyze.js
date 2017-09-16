@@ -15,9 +15,25 @@ function AnalyzeCasting()
 				'id' : userData.href,
 				'name' : userData.text.trim()})
 		}
+
+		else if (userImage.src == 'http://mush.twinoid.com/img/icons/ui/not_ready.png')
+		{
+			ListOfIdleUsers.push({
+				'id' : userData.href,
+				'name' : userData.text.trim()})
+		}
+
+		else if (userImage.src == 'http://mush.twinoid.com/img/icons/ui/in_game.png')
+		{
+			ListOfPlayingUsers.push({
+				'id' : userData.href,
+				'name' : userData.text.trim()})
+		}
 	}
 
-	return(ListOfReadiedUsers);
+	var returnVal = [ListOfReadiedUsers, ListOfIdleUsers, ListOfPlayingUsers];
+
+	return(returnVal);
 }
 
 AnalyzeCasting();
