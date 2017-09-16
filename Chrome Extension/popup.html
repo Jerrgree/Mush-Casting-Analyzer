@@ -1,23 +1,8 @@
 <html>
   <head>
     <title>Mush Casting Analyzer</title>
-    <style type="text/css">
-      body {
-        margin: 10px;
-        white-space: nowrap;
-      }
-
-      h1 {
-        font-size: 15px;
-      }
-
-      #container {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-      }
-    </style>
-
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script type="text/javascript" src="script.js"></script>
     <script src="jquery-3.2.1.min.js"></script>
   </head>
@@ -25,10 +10,18 @@
   <body>
     <h1>Analyze the Casting</h1>
     <div id="container">
-      <button id="analyzeButton">Analyze!</button>
-      <ul id="readiedPlayers"> Readied Players </ul>
-      <!-- <ul id="idlePlayers"> Idle Players </ul>
-      <ul id="playingPlayers"> Players in a game </ul> -->
+      <div class="panel panel-default" id="playerListPanel">
+        <div class="panel-body">
+          <div class="col-md-1">
+            <h3 id="mainText">Click to Analyze a Casting</h3>
+            <ul id="readiedPlayers"></ul>
+          </div>
+        </div>
+        <span>
+          <button id="analyzeButton" class="btn btn-primary">Analyze!</button>
+          <button id="saveButton" class="btn btn-default" style="display:none;">Save</button>
+        </span>
+      </div>
     </div>
   </body>
 </html>

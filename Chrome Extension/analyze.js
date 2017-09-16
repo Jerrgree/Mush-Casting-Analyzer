@@ -12,26 +12,28 @@ function AnalyzeCasting()
 		if (userImage.src == 'http://mush.twinoid.com/img/icons/ui/ready.png')
 		{
 			ListOfReadiedUsers.push({
-				'id' : userData.href,
+				'id' : userData.href.substring(29),
 				'name' : userData.text.trim()})
 		}
 
 		else if (userImage.src == 'http://mush.twinoid.com/img/icons/ui/not_ready.png')
 		{
 			ListOfIdleUsers.push({
-				'id' : userData.href,
+				'id' : userData.href.substring(29),
 				'name' : userData.text.trim()})
 		}
 
 		else if (userImage.src == 'http://mush.twinoid.com/img/icons/ui/in_game.png')
 		{
 			ListOfPlayingUsers.push({
-				'id' : userData.href,
+				'id' : userData.href.substring(29),
 				'name' : userData.text.trim()})
 		}
 	}
 
-	var returnVal = [ListOfReadiedUsers, ListOfIdleUsers, ListOfPlayingUsers];
+	var CastingName = document.getElementsByClassName('glow')[0].text;
+
+	var returnVal = [ListOfReadiedUsers, ListOfIdleUsers, ListOfPlayingUsers, CastingName];
 
 	return(returnVal);
 }

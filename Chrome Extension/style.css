@@ -1,0 +1,30 @@
+body 
+{
+  margin: 10px;
+  white-space: nowrap;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+h1 
+{
+  font-size: 15px;
+}
+
+#container 
+{
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+#readiedPlayers
+{
+
+}
+
+#playerListPanel
+{
+  width: 100%;
+  margin: 0 auto;
+}
