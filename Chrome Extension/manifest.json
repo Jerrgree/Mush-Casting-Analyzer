@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+
+  "name": "Mush Casting Analyzer",
+  "description": "This extension will record data about who is ready in your casting.",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "Mush.png",
+    "default_popup": "popup.html",
+    "default_title": "Mush Casting Analyzer"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "fileSystem",
+    "http://mush.twinoid.com/g/*"
+  ]
+}
