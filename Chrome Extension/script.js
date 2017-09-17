@@ -83,7 +83,7 @@ function SaveData()
     list = list + idlePlayers[i].id + ', ' + idlePlayers[i].name + ', idle' + "\r\n";
   }
 
-  for (var i = 0; i < playingPlayers.name; i++)
+  for (var i = 0; i < playingPlayers.length; i++)
   {
     list = list + playingPlayers[i].id + ', ' + playingPlayers[i].name + ', in game' + "\r\n";
   }
