@@ -2,6 +2,7 @@ var readiedPlayers = [];
 var idlePlayers = [];
 var playingPlayers = [];
 var castingName;
+var chosenEntry = 'C://test.txt';
 
 function getCurrentTabUrl(callback) 
 {
@@ -20,6 +21,9 @@ function getCurrentTabUrl(callback)
     callback(url);
   });
 }
+
+////// END CHROME CALLBACKS ////////
+
 
 function AnalyzeResults(result)
 {
@@ -47,7 +51,7 @@ function AnalyzeResults(result)
     $('#mainText').text(readiedPlayers.length + ' Players are Ready');
   }
 
-  if (readiedPlayers.length > 0 || idlePlayers > 0 || playingPlayers > 0)
+  if (readiedPlayers.length > 0 || idlePlayers.length > 0 || playingPlayers.length > 0)
   {
     $('#saveButton').show();
   }
@@ -66,8 +70,31 @@ function InjectAnalyzeScript()
 
 function SaveData()
 {
-  console.log(readiedPlayers);
-  console.log(playingPlayers);
+  var now = $.now();
+  var list = now + ', ' + castingName + ',' + "\r\n";
+
+  for (var i = 0; i < readiedPlayers.length; i++)
+  {
+    list = list + readiedPlayers[i].id + ', ' + readiedPlayers[i].name + ', ready' + "\r\n";
+  }
+
+  for (var i = 0; i < idlePlayers.length; i++)
+  {
+    list = list + idlePlayers[i].id + ', ' + idlePlayers[i].name + ', idle' + "\r\n";
+  }
+
+  for (var i = 0; i < playingPlayers.length; i++)
+  {
+    list = list + playingPlayers[i].id + ', ' + playingPlayers[i].name + ', in game' + "\r\n";
+  }
+
+  // If not recorded in base64, newlines are stripped out
+  list = btoa(list);
+
+  var link = document.createElement('a');
+  link.download = now + '.csv';
+  link.href = 'data:text/csv;base64,' + list;
+  link.click();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
