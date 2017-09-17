@@ -13,7 +13,7 @@
   "permissions": [
     "activeTab",
     "storage",
-    "fileSystem",
+    "downloads",
     "http://mush.twinoid.com/g/*"
   ]
 }
