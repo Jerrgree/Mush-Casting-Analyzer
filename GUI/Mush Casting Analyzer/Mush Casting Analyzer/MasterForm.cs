@@ -14,6 +14,7 @@ namespace Mush_Casting_Analyzer
     public partial class MasterForm : Form
     {
         private ErrorProvider error = new ErrorProvider();
+        private int NumberOfDays;
 
         public MasterForm()
         {
@@ -23,6 +24,8 @@ namespace Mush_Casting_Analyzer
         private void directorySelectBTN_Click(object sender, EventArgs e)
         {
             error.SetError(directoryPath, "");
+            error.SetError(endDatePicker, "");
+            error.SetError(NumberOfDaysEntry, "");
             var fbd = new FolderBrowserDialog();
             fbd.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
@@ -36,9 +39,8 @@ namespace Mush_Casting_Analyzer
 
         private void analyzeFilesBTN_Click(object sender, EventArgs e)
         {
-            if (directoryPath.Text == "")
+            if (!validate())
             {
-                error.SetError(directoryPath, "Required");
                 return;
             }
             string[] files;
@@ -82,6 +84,57 @@ namespace Mush_Casting_Analyzer
                     return;
                 }
             }
+        }
+
+        private void analyzeByDaysRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (analyzeByDaysRadio.Checked)
+            {
+                NumberOfDaysPanel.Enabled = true;
+                IntervalPanel.Enabled = false;
+            }
+
+            else
+            {
+                NumberOfDaysPanel.Enabled = false;
+                IntervalPanel.Enabled = true;
+            }
+        }
+
+        private bool validate()
+        {
+            bool isValid = true;
+            if (directoryPath.Text == "")
+            {
+                error.SetError(directoryPath, "Required");
+                isValid = false;
+            }
+
+            if (analyzeByDaysRadio.Checked)
+            {
+                if (NumberOfDaysEntry.Value < 1)
+                {
+                    error.SetError(NumberOfDaysEntry, "Number of Days must be positive");
+                    isValid = false;
+                }
+
+                if (!Int32.TryParse(NumberOfDaysEntry.Value.ToString(), out NumberOfDays))
+                {
+                    error.SetError(NumberOfDaysEntry, "Number of Days must be an integer");
+                    isValid = false;
+                }
+            }
+
+            else
+            {
+                if (startDatePicker.Value > endDatePicker.Value)
+                {
+                    error.SetError(endDatePicker, "End date cannot be before the start date");
+                    isValid = false;
+                }
+            }
+
+            return isValid;
         }
     }
 }
