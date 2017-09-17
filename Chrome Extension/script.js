@@ -88,6 +88,7 @@ function SaveData()
     list = list + playingPlayers[i].id + ', ' + playingPlayers[i].name + ', in game' + "\r\n";
   }
 
+  // If not recorded in base64, newlines are stripped out
   list = btoa(list);
 
   var link = document.createElement('a');
