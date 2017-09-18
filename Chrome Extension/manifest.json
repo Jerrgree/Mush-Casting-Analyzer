@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
 
-  "name": "Mush Casting Analyzer",
+  "name": "Mush Casting Bookkeeping",
   "description": "This extension will record data about who is ready in your casting.",
-  "version": "1.0",
+  "version": "1.0.0",
 
   "browser_action": {
-    "default_icon": "Mush.png",
+    "default_icon": "Icon.png",
     "default_popup": "popup.html",
-    "default_title": "Mush Casting Analyzer"
+    "default_title": "Mush Casting Bookkeeping"
   },
   "permissions": [
     "activeTab",
