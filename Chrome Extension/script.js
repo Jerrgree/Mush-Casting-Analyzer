@@ -71,7 +71,7 @@ function InjectAnalyzeScript()
 function SaveData()
 {
   var now = $.now();
-  var list = now + ', ' + castingName + ',' + "\r\n";
+  var list = now + ', ' + castingName + ', MushCastingBookkeeping' + "\r\n";
 
   for (var i = 0; i < readiedPlayers.length; i++)
   {
