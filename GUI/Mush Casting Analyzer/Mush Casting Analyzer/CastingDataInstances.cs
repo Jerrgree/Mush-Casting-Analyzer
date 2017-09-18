@@ -69,6 +69,11 @@ namespace Mush_Casting_Analyzer
             _dateTime = Convert.ToInt64(values[0]);
             _castingName = values[1];
 
+            if (values[2] != "MushCastingBookkeeping")
+            {
+                throw new SystemException("Invalid File");
+            }
+
             line = reader.ReadLine();
             while (!reader.EndOfStream)
             {
