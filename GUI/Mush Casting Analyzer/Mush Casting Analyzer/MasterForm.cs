@@ -43,47 +43,17 @@ namespace Mush_Casting_Analyzer
             {
                 return;
             }
-            string[] files;
 
-            try
-            {
-                files = Directory.GetFiles(directoryPath.Text, "*", SearchOption.AllDirectories);
-            }
+            bool isValid = true;
 
-            catch (Exception ex)
+            List<CastingDataInstances> DataInstances = LoadData(out isValid);
+
+            if (!isValid)
             {
-                error.SetError(directoryPath, ex.Message);
                 return;
             }
 
-            // UTC Now in milliseconds since epoch
-            long now = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
 
-            List<CastingDataInstances> dataInstances = new List<CastingDataInstances>();
-
-            try
-            {
-                foreach(string file in files)
-                { 
-                    dataInstances.Add(new CastingDataInstances(file));
-                }
-            }
-            catch (Exception ex)
-            {
-                error.SetError(directoryPath, "Unable to parse one or more files");
-                return;
-            }
-
-            string castingName = dataInstances[0].CastingName;
-
-            foreach(CastingDataInstances instance in dataInstances)
-            {
-                if (castingName != instance.CastingName)
-                {
-                    error.SetError(directoryPath, "Multiple Castings were found in this directory");
-                    return;
-                }
-            }
         }
 
         private void analyzeByDaysRadio_CheckedChanged(object sender, EventArgs e)
@@ -135,6 +105,56 @@ namespace Mush_Casting_Analyzer
             }
 
             return isValid;
+        }
+
+        private List<CastingDataInstances> LoadData(out bool isValid)
+        {
+            string[] files;
+            List<CastingDataInstances> dataInstances = new List<CastingDataInstances>();
+
+            try
+            {
+                files = Directory.GetFiles(directoryPath.Text, "*", SearchOption.AllDirectories);
+            }
+
+            catch (Exception ex)
+            {
+                error.SetError(directoryPath, ex.Message);
+                isValid = false;
+                return dataInstances;
+            }
+
+            // UTC Now in milliseconds since epoch
+            long now = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
+
+            try
+            {
+                foreach (string file in files)
+                {
+                    dataInstances.Add(new CastingDataInstances(file));
+                }
+            }
+            catch (Exception ex)
+            {
+                error.SetError(directoryPath, "Unable to parse one or more files");
+                isValid = false;
+                return dataInstances;
+            }
+
+            string castingName = dataInstances[0].CastingName;
+
+            foreach (CastingDataInstances instance in dataInstances)
+            {
+                if (castingName != instance.CastingName)
+                {
+                    error.SetError(directoryPath, "Multiple Castings were found in this directory");
+                    isValid = false;
+                    return dataInstances;
+                }
+            }
+
+            isValid = true;
+            return dataInstances;
         }
     }
 }

@@ -3,7 +3,7 @@
 
   "name": "Mush Casting Analyzer",
   "description": "This extension will record data about who is ready in your casting.",
-  "version": "1.0",
+  "version": "1.0.0",
 
   "browser_action": {
     "default_icon": "Mush.png",
