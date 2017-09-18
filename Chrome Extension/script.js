@@ -94,7 +94,9 @@ function SaveData()
   var link = document.createElement('a');
   link.download = now + '.csv';
   link.href = 'data:text/csv;base64,' + list;
-  link.click();
+  //link.click();
+
+  chrome.downloads.download({url: link.href, filename: link.download, saveAs: true});
 }
 
 document.addEventListener('DOMContentLoaded', function() {
