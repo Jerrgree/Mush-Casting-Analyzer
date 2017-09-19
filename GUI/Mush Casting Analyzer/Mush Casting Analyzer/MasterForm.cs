@@ -53,7 +53,23 @@ namespace Mush_Casting_Analyzer
                 return;
             }
 
+            Results frm = new Results();
 
+            if (analyzeByDaysRadio.Checked)
+            {
+                frm.AnalyzeData(NumberOfDays, ref DataInstances);
+            }
+
+            else
+            {
+                frm.AnalyzeData(
+                    (long)(startDatePicker.Value - new DateTime(1970, 1, 1)).TotalMilliseconds,
+                    (long)(endDatePicker.Value - new DateTime(1970, 1, 1)).TotalMilliseconds,
+                    ref DataInstances
+                    );
+            }
+
+            frm.Show();
         }
 
         private void analyzeByDaysRadio_CheckedChanged(object sender, EventArgs e)
@@ -123,9 +139,6 @@ namespace Mush_Casting_Analyzer
                 isValid = false;
                 return dataInstances;
             }
-
-            // UTC Now in milliseconds since epoch
-            long now = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
 
             try
             {

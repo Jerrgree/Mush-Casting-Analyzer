@@ -7,19 +7,19 @@ using System.IO;
 
 namespace Mush_Casting_Analyzer
 {
-    class CastingDataInstances
+    public class CastingDataInstances : IComparable<CastingDataInstances>
     {
         private string _castingName;
-        private long _dateTime;
+        private long _timeStamp;
         private List <User> _readiedUsers;
         private List <User> _idleUsers;
         private List <User> _playingUsers;
 
-        public long DateTime
+        public long TimeStamp
         {
             get
             {
-                return _dateTime;
+                return _timeStamp;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Mush_Casting_Analyzer
             var values = line.Split(',');
             values[2] = values[2].Trim();
 
-            _dateTime = Convert.ToInt64(values[0]);
+            _timeStamp = Convert.ToInt64(values[0]);
             _castingName = values[1];
 
             if (values[2] != "MushCastingBookkeeping")
@@ -101,6 +101,11 @@ namespace Mush_Casting_Analyzer
             }
 
             reader.Close();
+        }
+
+        public int CompareTo(CastingDataInstances rhs)
+        {
+            return TimeStamp.CompareTo(rhs.TimeStamp);
         }
     }
 }

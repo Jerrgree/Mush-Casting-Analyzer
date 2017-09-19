@@ -48,7 +48,7 @@
             // 
             // directorySelectBTN
             // 
-            this.directorySelectBTN.Location = new System.Drawing.Point(150, 59);
+            this.directorySelectBTN.Location = new System.Drawing.Point(12, 12);
             this.directorySelectBTN.Name = "directorySelectBTN";
             this.directorySelectBTN.Size = new System.Drawing.Size(136, 23);
             this.directorySelectBTN.TabIndex = 0;
@@ -59,14 +59,14 @@
             // directoryPath
             // 
             this.directoryPath.Enabled = false;
-            this.directoryPath.Location = new System.Drawing.Point(13, 59);
+            this.directoryPath.Location = new System.Drawing.Point(154, 12);
             this.directoryPath.Name = "directoryPath";
             this.directoryPath.Size = new System.Drawing.Size(131, 20);
             this.directoryPath.TabIndex = 1;
             // 
             // analyzeFilesBTN
             // 
-            this.analyzeFilesBTN.Location = new System.Drawing.Point(150, 351);
+            this.analyzeFilesBTN.Location = new System.Drawing.Point(12, 252);
             this.analyzeFilesBTN.Name = "analyzeFilesBTN";
             this.analyzeFilesBTN.Size = new System.Drawing.Size(136, 23);
             this.analyzeFilesBTN.TabIndex = 2;
@@ -78,7 +78,7 @@
             // 
             this.analyzeByDaysRadio.AutoSize = true;
             this.analyzeByDaysRadio.Checked = true;
-            this.analyzeByDaysRadio.Location = new System.Drawing.Point(12, 101);
+            this.analyzeByDaysRadio.Location = new System.Drawing.Point(12, 59);
             this.analyzeByDaysRadio.Name = "analyzeByDaysRadio";
             this.analyzeByDaysRadio.Size = new System.Drawing.Size(156, 17);
             this.analyzeByDaysRadio.TabIndex = 3;
@@ -90,7 +90,7 @@
             // analyzeByIntervalRadio
             // 
             this.analyzeByIntervalRadio.AutoSize = true;
-            this.analyzeByIntervalRadio.Location = new System.Drawing.Point(12, 166);
+            this.analyzeByIntervalRadio.Location = new System.Drawing.Point(12, 124);
             this.analyzeByIntervalRadio.Name = "analyzeByIntervalRadio";
             this.analyzeByIntervalRadio.Size = new System.Drawing.Size(141, 17);
             this.analyzeByIntervalRadio.TabIndex = 4;
@@ -136,7 +136,7 @@
             this.IntervalPanel.Controls.Add(this.startDatePicker);
             this.IntervalPanel.Controls.Add(this.endDatePicker);
             this.IntervalPanel.Enabled = false;
-            this.IntervalPanel.Location = new System.Drawing.Point(13, 189);
+            this.IntervalPanel.Location = new System.Drawing.Point(13, 147);
             this.IntervalPanel.Name = "IntervalPanel";
             this.IntervalPanel.Size = new System.Drawing.Size(243, 95);
             this.IntervalPanel.TabIndex = 10;
@@ -144,7 +144,7 @@
             // NumberOfDaysPanel
             // 
             this.NumberOfDaysPanel.Controls.Add(this.NumberOfDaysEntry);
-            this.NumberOfDaysPanel.Location = new System.Drawing.Point(12, 124);
+            this.NumberOfDaysPanel.Location = new System.Drawing.Point(12, 82);
             this.NumberOfDaysPanel.Name = "NumberOfDaysPanel";
             this.NumberOfDaysPanel.Size = new System.Drawing.Size(244, 36);
             this.NumberOfDaysPanel.TabIndex = 11;
@@ -160,7 +160,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 386);
+            this.ClientSize = new System.Drawing.Size(294, 286);
             this.Controls.Add(this.analyzeByIntervalRadio);
             this.Controls.Add(this.analyzeByDaysRadio);
             this.Controls.Add(this.NumberOfDaysPanel);
