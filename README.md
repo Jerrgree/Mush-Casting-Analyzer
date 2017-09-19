@@ -7,3 +7,7 @@ Currently Implemented:
   
 In Progress:
   Developing a downloadable GUI that can parse the files and display state changes
+
+
+Get the extension on the Chrome Store!
+https://chrome.google.com/webstore/detail/mush-casting-bookkeeping/nagblefleeeccbbepocichgacdhcbnlh
