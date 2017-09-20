@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mush_Casting_Analyzer
+namespace Mush_Casting_Bookkeeping
 {
     public class User
     {
         private int _id;
         private string _name;
-        private userStatus _status; 
+        private userStatus _status;
 
         public int ID
         {

@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
+using System.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
-namespace Mush_Casting_Analyzer
+namespace Mush_Casting_Bookkeeping
 {
-    public partial class Results : Form
+    /// <summary>
+    /// Interaction logic for Results.xaml
+    /// </summary>
+    public partial class Results : Window
     {
         private Dictionary<int, UserStatusReport> userStatusReport;
         private TimeZoneInfo _timeZone;
@@ -66,7 +73,7 @@ namespace Mush_Casting_Analyzer
 
             Data.Sort();
 
-            foreach(CastingDataInstances dataPoint in Data)
+            foreach (CastingDataInstances dataPoint in Data)
             {
 
             }
@@ -182,7 +189,7 @@ namespace Mush_Casting_Analyzer
                     userStatusReport[inGamePlayer.ID].LastRecordedTimeStamp = time;
                 }
             }
-            
+
             foreach (KeyValuePair<int, UserStatusReport> userInstance in userStatusReport)
             {
                 if (userInstance.Value.LastRecordedTimeStamp != time && userInstance.Value.StatusChanges.Last().Status != userStatus.Removed)
@@ -192,7 +199,7 @@ namespace Mush_Casting_Analyzer
             }
         }
 
-        public void publishDetailReport()
+        private void publishDetailReport()
         {
             DataTable masterDetailView = new DataTable();
             masterDetailView.Columns.Add("User ID", typeof(int));
@@ -200,9 +207,9 @@ namespace Mush_Casting_Analyzer
 
             DataTable userDetailView = new DataTable();
             userDetailView.Columns.Add("User ID", typeof(int));
-            userDetailView.Columns.Add("Status", typeof(userStatus));
+            userDetailView.Columns.Add("Status", typeof(string));
             userDetailView.Columns.Add("Date", typeof(string));
-            
+
             foreach (KeyValuePair<int, UserStatusReport> userInstance in userStatusReport)
             {
                 int id = userInstance.Key;
@@ -213,11 +220,11 @@ namespace Mush_Casting_Analyzer
                     DateTime InstanceTime = FromEpochTime(StatusChange.TimeStamp);
                     if (TimeIn24hrs)
                     {
-                        userDetailView.Rows.Add(id, StatusChange.Status, InstanceTime.ToString("yyyy-MM-d : HH-mm-ss"));
+                        userDetailView.Rows.Add(id, StatusChange.Status.ToString(), InstanceTime.ToString("yyyy-MM-d : HH-mm-ss"));
                     }
                     else
                     {
-                        userDetailView.Rows.Add(id, StatusChange.Status, InstanceTime.ToString("yyyy-MM-d : hh-mm-ss tt"));
+                        userDetailView.Rows.Add(id, StatusChange.Status.ToString(), InstanceTime.ToString("yyyy-MM-d : hh-mm-ss tt"));
                     }
                 }
             }
@@ -230,12 +237,29 @@ namespace Mush_Casting_Analyzer
             DataRelation relation = new DataRelation("DetailedView", CombinedSet.Tables[0].Columns[0], CombinedSet.Tables[1].Columns[0], true);
             CombinedSet.Relations.Add(relation);
 
+            for(int i = 0; i < CombinedSet.Tables[0].Rows.Count; i++)
+            {
+                Expander newRow = new Expander();
+                newRow.Header = CombinedSet.Tables[0].Rows[i][1];
 
-            DataGrid ResultDataGridView = new DataGrid();
-            ResultDataGridView.Dock = DockStyle.Fill;
-            ResultDataGridView.DataSource = CombinedSet.Tables[0];
+                DataRow[] drs = CombinedSet.Tables[0].Rows[i].GetChildRows("DetailedView");
+                DataTable dt = new DataTable();
+                DataGrid dg = new DataGrid();
 
-            this.Controls.Add(ResultDataGridView);
+                dt.Columns.Add("User ID", typeof(int));
+                dt.Columns.Add("Status", typeof(string));
+                dt.Columns.Add("Date", typeof(string));
+
+                foreach (DataRow dr in drs)
+                {
+                    dt.ImportRow(dr);
+                }
+                dg.ItemsSource = dt.DefaultView;
+
+                newRow.Content = dg;
+
+                stack.Children.Add(newRow);
+            }
         }
 
         private DateTime FromEpochTime(long TimeStamp)

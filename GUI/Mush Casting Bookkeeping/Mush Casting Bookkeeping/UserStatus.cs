@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mush_Casting_Analyzer
+namespace Mush_Casting_Bookkeeping
 {
     public enum userStatus
     {

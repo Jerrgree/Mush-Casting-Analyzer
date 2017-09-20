@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mush_Casting_Analyzer.Properties {
+namespace Mush_Casting_Bookkeeping.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
