@@ -46,5 +46,17 @@ namespace Mush_Casting_Analyzer.Properties {
                 this["DefaultTimeZone"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowTimeIn24hrs {
+            get {
+                return ((bool)(this["ShowTimeIn24hrs"]));
+            }
+            set {
+                this["ShowTimeIn24hrs"] = value;
+            }
+        }
     }
 }

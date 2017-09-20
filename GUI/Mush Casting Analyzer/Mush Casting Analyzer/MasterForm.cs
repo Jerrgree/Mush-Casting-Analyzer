@@ -37,6 +37,8 @@ namespace Mush_Casting_Analyzer
             {
                 directoryPath.Text = Properties.Settings.Default.DefaultPath;
             }
+
+            TimeFormatCheckbox.Checked = Properties.Settings.Default.ShowTimeIn24hrs;
         }
 
         private void directorySelectBTN_Click(object sender, EventArgs e)
@@ -72,7 +74,7 @@ namespace Mush_Casting_Analyzer
                 return;
             }
 
-            Results frm = new Results((TimeZoneInfo)TimeZoneDropDown.SelectedItem);
+            Results frm = new Results((TimeZoneInfo)TimeZoneDropDown.SelectedItem, TimeFormatCheckbox.Checked);
 
             if (analyzeByDaysRadio.Checked)
             {

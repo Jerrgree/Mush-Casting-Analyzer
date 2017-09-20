@@ -44,6 +44,7 @@
             this.TimeZoneDropDown = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.OptionsButton = new System.Windows.Forms.Button();
+            this.TimeFormatCheckbox = new System.Windows.Forms.CheckBox();
             this.IntervalPanel.SuspendLayout();
             this.NumberOfDaysPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumberOfDaysEntry)).BeginInit();
@@ -165,7 +166,7 @@
             this.TimeZoneDropDown.FormattingEnabled = true;
             this.TimeZoneDropDown.Location = new System.Drawing.Point(12, 76);
             this.TimeZoneDropDown.Name = "TimeZoneDropDown";
-            this.TimeZoneDropDown.Size = new System.Drawing.Size(244, 21);
+            this.TimeZoneDropDown.Size = new System.Drawing.Size(156, 21);
             this.TimeZoneDropDown.TabIndex = 12;
             // 
             // label3
@@ -187,11 +188,22 @@
             this.OptionsButton.UseVisualStyleBackColor = true;
             this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
             // 
+            // TimeFormatCheckbox
+            // 
+            this.TimeFormatCheckbox.AutoSize = true;
+            this.TimeFormatCheckbox.Location = new System.Drawing.Point(175, 76);
+            this.TimeFormatCheckbox.Name = "TimeFormatCheckbox";
+            this.TimeFormatCheckbox.Size = new System.Drawing.Size(79, 17);
+            this.TimeFormatCheckbox.TabIndex = 15;
+            this.TimeFormatCheckbox.Text = "24hr Time?";
+            this.TimeFormatCheckbox.UseVisualStyleBackColor = true;
+            // 
             // MasterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 338);
+            this.Controls.Add(this.TimeFormatCheckbox);
             this.Controls.Add(this.OptionsButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.TimeZoneDropDown);
@@ -231,6 +243,7 @@
         private System.Windows.Forms.ComboBox TimeZoneDropDown;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button OptionsButton;
+        private System.Windows.Forms.CheckBox TimeFormatCheckbox;
     }
 }
 

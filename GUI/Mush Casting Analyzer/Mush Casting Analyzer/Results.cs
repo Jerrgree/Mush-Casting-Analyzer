@@ -13,17 +13,28 @@ namespace Mush_Casting_Analyzer
     public partial class Results : Form
     {
         private Dictionary<int, UserStatusReport> userStatusReport;
-        private TimeZoneInfo TimeZone;
+        private TimeZoneInfo _timeZone;
+        private bool TimeIn24hrs;
 
-        public Results(TimeZoneInfo timeZone)
+        public TimeZoneInfo TimeZone
+        {
+            get
+            {
+                return _timeZone;
+            }
+
+            set
+            {
+                _timeZone = value;
+            }
+        }
+
+        public Results(TimeZoneInfo timeZone, bool timeIn24hrs)
         {
             InitializeComponent();
 
-            ResultsTabControl.TabPages[0].Text = "Readied -> Idle";
-            ResultsTabControl.TabPages[1].Text = "Readied -> In Game";
-            ResultsTabControl.TabPages[2].Text = "Unchanged";
-
             TimeZone = timeZone;
+            TimeIn24hrs = timeIn24hrs;
         }
 
         public void AnalyzeData(int days, ref List<CastingDataInstances> Data)
@@ -32,17 +43,21 @@ namespace Mush_Casting_Analyzer
 
             long endTime = (long)(DateTime.Now.AddDays(-days) - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
 
-            Data.Sort(new Comparison<CastingDataInstances>((i1, i2) => i2.CompareTo(i1))); // Sort in reverse
+            Data.Sort();
 
             foreach (CastingDataInstances dataPoint in Data)
             {
-                if (dataPoint.TimeStamp < endTime)
+                if (dataPoint.TimeStamp > endTime)
+                {
+                    AnalyzeInstance(dataPoint, ref Data);
+                }
+                else
                 {
                     break;
                 }
-
-                AnalyzeInstance(dataPoint, ref Data);
             }
+
+            publishDetailReport();
         }
 
         public void AnalyzeData(long startTime, long endTime, ref List<CastingDataInstances> Data)
@@ -70,7 +85,7 @@ namespace Mush_Casting_Analyzer
                             (
                                 idlePlayer.Name,
                                 userStatus.Idle,
-                                dataPoint.TimeStamp
+                                time
                             );
                     }
 
@@ -80,7 +95,7 @@ namespace Mush_Casting_Analyzer
                             (
                                 idlePlayer.Name,
                                 userStatus.NewIdle,
-                                dataPoint.TimeStamp
+                                time
                             );
                     }
                 }
@@ -88,6 +103,11 @@ namespace Mush_Casting_Analyzer
                 {
                     userStatusReport[idlePlayer.ID].UserName = idlePlayer.Name;
                     userStatusReport[idlePlayer.ID].StatusChanges.Add(new UserStatusTimeStamp(userStatus.Idle, time));
+                    userStatusReport[idlePlayer.ID].LastRecordedTimeStamp = time;
+                }
+                else
+                {
+                    userStatusReport[idlePlayer.ID].LastRecordedTimeStamp = time;
                 }
             }
 
@@ -101,7 +121,7 @@ namespace Mush_Casting_Analyzer
                             (
                                 readiedPlayer.Name,
                                 userStatus.Readied,
-                                dataPoint.TimeStamp
+                                time
                             );
                     }
 
@@ -111,7 +131,7 @@ namespace Mush_Casting_Analyzer
                             (
                                 readiedPlayer.Name,
                                 userStatus.NewReadied,
-                                dataPoint.TimeStamp
+                                time
                             );
                     }
                 }
@@ -119,6 +139,11 @@ namespace Mush_Casting_Analyzer
                 {
                     userStatusReport[readiedPlayer.ID].UserName = readiedPlayer.Name;
                     userStatusReport[readiedPlayer.ID].StatusChanges.Add(new UserStatusTimeStamp(userStatus.Readied, time));
+                    userStatusReport[readiedPlayer.ID].LastRecordedTimeStamp = time;
+                }
+                else
+                {
+                    userStatusReport[readiedPlayer.ID].LastRecordedTimeStamp = time;
                 }
             }
 
@@ -132,7 +157,7 @@ namespace Mush_Casting_Analyzer
                             (
                                 inGamePlayer.Name,
                                 userStatus.InGame,
-                                dataPoint.TimeStamp
+                                time
                             );
                     }
 
@@ -142,7 +167,7 @@ namespace Mush_Casting_Analyzer
                             (
                                 inGamePlayer.Name,
                                 userStatus.NewInGame,
-                                dataPoint.TimeStamp
+                                time
                             );
                     }
                 }
@@ -150,27 +175,73 @@ namespace Mush_Casting_Analyzer
                 {
                     userStatusReport[inGamePlayer.ID].UserName = inGamePlayer.Name;
                     userStatusReport[inGamePlayer.ID].StatusChanges.Add(new UserStatusTimeStamp(userStatus.InGame, time));
+                    userStatusReport[inGamePlayer.ID].LastRecordedTimeStamp = time;
+                }
+                else
+                {
+                    userStatusReport[inGamePlayer.ID].LastRecordedTimeStamp = time;
                 }
             }
             
             foreach (KeyValuePair<int, UserStatusReport> userInstance in userStatusReport)
             {
-                if (userInstance.Value.StatusChanges.Last().TimeStamp != time && userInstance.Value.StatusChanges.Last().Status != userStatus.Removed)
+                if (userInstance.Value.LastRecordedTimeStamp != time && userInstance.Value.StatusChanges.Last().Status != userStatus.Removed)
                 {
                     userInstance.Value.StatusChanges.Add(new UserStatusTimeStamp(userStatus.Removed, time));
                 }
             }
         }
 
-        public void publishData()
+        public void publishDetailReport()
         {
+            DataTable masterDetailView = new DataTable();
+            masterDetailView.Columns.Add("User ID", typeof(int));
+            masterDetailView.Columns.Add("User Name", typeof(string));
 
+            DataTable userDetailView = new DataTable();
+            userDetailView.Columns.Add("User ID", typeof(int));
+            userDetailView.Columns.Add("Status", typeof(userStatus));
+            userDetailView.Columns.Add("Date", typeof(string));
+            
+            foreach (KeyValuePair<int, UserStatusReport> userInstance in userStatusReport)
+            {
+                int id = userInstance.Key;
+                masterDetailView.Rows.Add(id, userInstance.Value.UserName);
+
+                foreach (UserStatusTimeStamp StatusChange in userInstance.Value.StatusChanges)
+                {
+                    DateTime InstanceTime = FromEpochTime(StatusChange.TimeStamp);
+                    if (TimeIn24hrs)
+                    {
+                        userDetailView.Rows.Add(id, StatusChange.Status, InstanceTime.ToString("yyyy-MM-d : HH-mm-ss"));
+                    }
+                    else
+                    {
+                        userDetailView.Rows.Add(id, StatusChange.Status, InstanceTime.ToString("yyyy-MM-d : hh-mm-ss tt"));
+                    }
+                }
+            }
+
+            DataSet CombinedSet = new DataSet();
+
+            CombinedSet.Tables.Add(masterDetailView);
+            CombinedSet.Tables.Add(userDetailView);
+
+            DataRelation relation = new DataRelation("DetailedView", CombinedSet.Tables[0].Columns[0], CombinedSet.Tables[1].Columns[0], true);
+            CombinedSet.Relations.Add(relation);
+
+
+            DataGrid ResultDataGridView = new DataGrid();
+            ResultDataGridView.Dock = DockStyle.Fill;
+            ResultDataGridView.DataSource = CombinedSet.Tables[0];
+
+            this.Controls.Add(ResultDataGridView);
         }
 
-        public static DateTime FromEpochTime(long TimeStamp, TimeZoneInfo zone)
+        private DateTime FromEpochTime(long TimeStamp)
         {
-            DateTime retValue = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(TimeStamp);
-            return TimeZoneInfo.ConvertTimeFromUtc(retValue, zone);
+            DateTime retValue = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(TimeStamp);
+            return TimeZoneInfo.ConvertTimeFromUtc(retValue, TimeZone);
         }
     }
 }
