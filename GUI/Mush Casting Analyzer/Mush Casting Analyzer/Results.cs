@@ -201,7 +201,8 @@ namespace Mush_Casting_Analyzer
             DataTable userDetailView = new DataTable();
             userDetailView.Columns.Add("User ID", typeof(int));
             userDetailView.Columns.Add("Status", typeof(userStatus));
-            userDetailView.Columns.Add("Date", typeof(DateTime));
+            userDetailView.Columns.Add("Date", typeof(string));
+            
             foreach (KeyValuePair<int, UserStatusReport> userInstance in userStatusReport)
             {
                 int id = userInstance.Key;
@@ -209,7 +210,15 @@ namespace Mush_Casting_Analyzer
 
                 foreach (UserStatusTimeStamp StatusChange in userInstance.Value.StatusChanges)
                 {
-                    userDetailView.Rows.Add(id, StatusChange.Status, FromEpochTime(StatusChange.TimeStamp));
+                    DateTime InstanceTime = FromEpochTime(StatusChange.TimeStamp);
+                    if (TimeIn24hrs)
+                    {
+                        userDetailView.Rows.Add(id, StatusChange.Status, InstanceTime.ToString("yyyy-MM-d : HH-mm-ss"));
+                    }
+                    else
+                    {
+                        userDetailView.Rows.Add(id, StatusChange.Status, InstanceTime.ToString("yyyy-MM-d : hh-mm-ss tt"));
+                    }
                 }
             }
 
