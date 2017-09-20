@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace Mush_Casting_Analyzer
 {
@@ -15,19 +16,36 @@ namespace Mush_Casting_Analyzer
     {
         private ErrorProvider error = new ErrorProvider();
         private int NumberOfDays;
+        private FolderBrowserDialog fbd = new FolderBrowserDialog();
 
         public MasterForm()
         {
             InitializeComponent();
+
+            ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
+
+            TimeZoneDropDown.DataSource = timeZones;
+
+            TimeZoneDropDown.SelectedItem = TimeZoneInfo.FindSystemTimeZoneById(Properties.Settings.Default.DefaultTimeZone);
+
+            if (Properties.Settings.Default.DefaultPath == "")
+            {
+                directoryPath.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+
+            else
+            {
+                directoryPath.Text = Properties.Settings.Default.DefaultPath;
+            }
+
+            TimeFormatCheckbox.Checked = Properties.Settings.Default.ShowTimeIn24hrs;
         }
 
         private void directorySelectBTN_Click(object sender, EventArgs e)
         {
             error.SetError(directoryPath, "");
-            error.SetError(endDatePicker, "");
-            error.SetError(NumberOfDaysEntry, "");
-            var fbd = new FolderBrowserDialog();
-            fbd.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            fbd.SelectedPath = directoryPath.Text;
 
             DialogResult result = fbd.ShowDialog();
 
@@ -39,6 +57,9 @@ namespace Mush_Casting_Analyzer
 
         private void analyzeFilesBTN_Click(object sender, EventArgs e)
         {
+            error.SetError(endDatePicker, "");
+            error.SetError(NumberOfDaysEntry, "");
+
             if (!validate())
             {
                 return;
@@ -53,7 +74,23 @@ namespace Mush_Casting_Analyzer
                 return;
             }
 
+            Results frm = new Results((TimeZoneInfo)TimeZoneDropDown.SelectedItem, TimeFormatCheckbox.Checked);
 
+            if (analyzeByDaysRadio.Checked)
+            {
+                frm.AnalyzeData(NumberOfDays, ref DataInstances);
+            }
+
+            else
+            {
+                frm.AnalyzeData(
+                    (long)(startDatePicker.Value - new DateTime(1970, 1, 1)).TotalMilliseconds,
+                    (long)(endDatePicker.Value - new DateTime(1970, 1, 1)).TotalMilliseconds,
+                    ref DataInstances
+                    );
+            }
+
+            frm.ShowDialog();
         }
 
         private void analyzeByDaysRadio_CheckedChanged(object sender, EventArgs e)
@@ -124,9 +161,6 @@ namespace Mush_Casting_Analyzer
                 return dataInstances;
             }
 
-            // UTC Now in milliseconds since epoch
-            long now = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
-
             try
             {
                 foreach (string file in files)
@@ -155,6 +189,12 @@ namespace Mush_Casting_Analyzer
 
             isValid = true;
             return dataInstances;
+        }
+
+        private void OptionsButton_Click(object sender, EventArgs e)
+        {
+            OptionsForm frm = new OptionsForm();
+            frm.ShowDialog();
         }
     }
 }

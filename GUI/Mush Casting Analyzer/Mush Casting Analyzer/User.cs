@@ -6,21 +6,17 @@ using System.Threading.Tasks;
 
 namespace Mush_Casting_Analyzer
 {
-    class User
+    public class User
     {
-        private string _id;
+        private int _id;
         private string _name;
         private userStatus _status; 
 
-        public string ID
+        public int ID
         {
             get
             {
                 return _id;
-            }
-            set
-            {
-                _id = value;
             }
         }
 
@@ -30,10 +26,6 @@ namespace Mush_Casting_Analyzer
             {
                 return _name;
             }
-            set
-            {
-                _name = value;
-            }
         }
 
         public userStatus Status
@@ -42,15 +34,11 @@ namespace Mush_Casting_Analyzer
             {
                 return _status;
             }
-            set
-            {
-                _status = value;
-            }
         }
 
         public User(string id, string name, string status)
         {
-            _id = id;
+            _id = Int32.Parse(id);
             _name = name;
 
             switch (status)
