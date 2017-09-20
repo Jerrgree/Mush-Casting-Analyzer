@@ -8,5 +8,8 @@
     <Setting Name="DefaultTimeZone" Type="System.String" Scope="User">
       <Value Profile="(Default)">UTC</Value>
     </Setting>
+    <Setting Name="ShowTimeIn24hrs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

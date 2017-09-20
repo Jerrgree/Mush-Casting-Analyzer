@@ -35,12 +35,15 @@ namespace Mush_Casting_Analyzer
             {
                 directoryPath.Text = Properties.Settings.Default.DefaultPath;
             }
+
+            TimeFormatCheckbox.Checked = Properties.Settings.Default.ShowTimeIn24hrs;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.DefaultTimeZone = ((TimeZoneInfo)TimeZoneDropDown.SelectedItem).Id;
             Properties.Settings.Default.DefaultPath = directoryPath.Text;
+            Properties.Settings.Default.ShowTimeIn24hrs = TimeFormatCheckbox.Checked;
 
             Properties.Settings.Default.Save();
 
@@ -50,7 +53,8 @@ namespace Mush_Casting_Analyzer
         private void CloseButton_Click(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.DefaultTimeZone != ((TimeZoneInfo)TimeZoneDropDown.SelectedItem).Id ||
-                Properties.Settings.Default.DefaultPath != directoryPath.Text)
+                Properties.Settings.Default.DefaultPath != directoryPath.Text ||
+                Properties.Settings.Default.ShowTimeIn24hrs != TimeFormatCheckbox.Checked)
             {
                 DialogResult result = MessageBox.Show("You have unsaved changes. Are you certain that you wish to close?", "Unsaved Changes", MessageBoxButtons.YesNo);
 

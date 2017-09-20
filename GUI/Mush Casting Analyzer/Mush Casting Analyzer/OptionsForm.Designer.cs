@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.directoryPath = new System.Windows.Forms.TextBox();
             this.directorySelectBTN = new System.Windows.Forms.Button();
+            this.TimeFormatCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // SaveButton
@@ -60,7 +61,7 @@
             // 
             this.TimeZoneDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TimeZoneDropDown.FormattingEnabled = true;
-            this.TimeZoneDropDown.Location = new System.Drawing.Point(13, 34);
+            this.TimeZoneDropDown.Location = new System.Drawing.Point(6, 31);
             this.TimeZoneDropDown.Name = "TimeZoneDropDown";
             this.TimeZoneDropDown.Size = new System.Drawing.Size(240, 21);
             this.TimeZoneDropDown.TabIndex = 2;
@@ -68,7 +69,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 15);
+            this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 13);
             this.label1.TabIndex = 3;
@@ -77,14 +78,14 @@
             // directoryPath
             // 
             this.directoryPath.Enabled = false;
-            this.directoryPath.Location = new System.Drawing.Point(113, 121);
+            this.directoryPath.Location = new System.Drawing.Point(113, 78);
             this.directoryPath.Name = "directoryPath";
             this.directoryPath.Size = new System.Drawing.Size(166, 20);
             this.directoryPath.TabIndex = 5;
             // 
             // directorySelectBTN
             // 
-            this.directorySelectBTN.Location = new System.Drawing.Point(6, 119);
+            this.directorySelectBTN.Location = new System.Drawing.Point(6, 75);
             this.directorySelectBTN.Name = "directorySelectBTN";
             this.directorySelectBTN.Size = new System.Drawing.Size(101, 23);
             this.directorySelectBTN.TabIndex = 4;
@@ -92,11 +93,22 @@
             this.directorySelectBTN.UseVisualStyleBackColor = true;
             this.directorySelectBTN.Click += new System.EventHandler(this.directorySelectBTN_Click);
             // 
+            // TimeFormatCheckbox
+            // 
+            this.TimeFormatCheckbox.AutoSize = true;
+            this.TimeFormatCheckbox.Location = new System.Drawing.Point(6, 118);
+            this.TimeFormatCheckbox.Name = "TimeFormatCheckbox";
+            this.TimeFormatCheckbox.Size = new System.Drawing.Size(139, 17);
+            this.TimeFormatCheckbox.TabIndex = 6;
+            this.TimeFormatCheckbox.Text = "Default to 24 Hour Time";
+            this.TimeFormatCheckbox.UseVisualStyleBackColor = true;
+            // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.TimeFormatCheckbox);
             this.Controls.Add(this.directoryPath);
             this.Controls.Add(this.directorySelectBTN);
             this.Controls.Add(this.label1);
@@ -118,5 +130,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox directoryPath;
         private System.Windows.Forms.Button directorySelectBTN;
+        private System.Windows.Forms.CheckBox TimeFormatCheckbox;
     }
 }
