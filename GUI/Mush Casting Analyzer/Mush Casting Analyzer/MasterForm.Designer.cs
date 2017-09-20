@@ -41,6 +41,9 @@
             this.IntervalPanel = new System.Windows.Forms.Panel();
             this.NumberOfDaysPanel = new System.Windows.Forms.Panel();
             this.NumberOfDaysEntry = new System.Windows.Forms.NumericUpDown();
+            this.TimeZoneDropDown = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.OptionsButton = new System.Windows.Forms.Button();
             this.IntervalPanel.SuspendLayout();
             this.NumberOfDaysPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumberOfDaysEntry)).BeginInit();
@@ -50,7 +53,7 @@
             // 
             this.directorySelectBTN.Location = new System.Drawing.Point(12, 12);
             this.directorySelectBTN.Name = "directorySelectBTN";
-            this.directorySelectBTN.Size = new System.Drawing.Size(136, 23);
+            this.directorySelectBTN.Size = new System.Drawing.Size(103, 23);
             this.directorySelectBTN.TabIndex = 0;
             this.directorySelectBTN.Text = "Select a Directory";
             this.directorySelectBTN.UseVisualStyleBackColor = true;
@@ -59,14 +62,14 @@
             // directoryPath
             // 
             this.directoryPath.Enabled = false;
-            this.directoryPath.Location = new System.Drawing.Point(154, 12);
+            this.directoryPath.Location = new System.Drawing.Point(118, 14);
             this.directoryPath.Name = "directoryPath";
-            this.directoryPath.Size = new System.Drawing.Size(131, 20);
+            this.directoryPath.Size = new System.Drawing.Size(164, 20);
             this.directoryPath.TabIndex = 1;
             // 
             // analyzeFilesBTN
             // 
-            this.analyzeFilesBTN.Location = new System.Drawing.Point(12, 252);
+            this.analyzeFilesBTN.Location = new System.Drawing.Point(12, 296);
             this.analyzeFilesBTN.Name = "analyzeFilesBTN";
             this.analyzeFilesBTN.Size = new System.Drawing.Size(136, 23);
             this.analyzeFilesBTN.TabIndex = 2;
@@ -78,7 +81,7 @@
             // 
             this.analyzeByDaysRadio.AutoSize = true;
             this.analyzeByDaysRadio.Checked = true;
-            this.analyzeByDaysRadio.Location = new System.Drawing.Point(12, 59);
+            this.analyzeByDaysRadio.Location = new System.Drawing.Point(12, 103);
             this.analyzeByDaysRadio.Name = "analyzeByDaysRadio";
             this.analyzeByDaysRadio.Size = new System.Drawing.Size(156, 17);
             this.analyzeByDaysRadio.TabIndex = 3;
@@ -90,7 +93,7 @@
             // analyzeByIntervalRadio
             // 
             this.analyzeByIntervalRadio.AutoSize = true;
-            this.analyzeByIntervalRadio.Location = new System.Drawing.Point(12, 124);
+            this.analyzeByIntervalRadio.Location = new System.Drawing.Point(12, 168);
             this.analyzeByIntervalRadio.Name = "analyzeByIntervalRadio";
             this.analyzeByIntervalRadio.Size = new System.Drawing.Size(141, 17);
             this.analyzeByIntervalRadio.TabIndex = 4;
@@ -136,7 +139,7 @@
             this.IntervalPanel.Controls.Add(this.startDatePicker);
             this.IntervalPanel.Controls.Add(this.endDatePicker);
             this.IntervalPanel.Enabled = false;
-            this.IntervalPanel.Location = new System.Drawing.Point(13, 147);
+            this.IntervalPanel.Location = new System.Drawing.Point(13, 191);
             this.IntervalPanel.Name = "IntervalPanel";
             this.IntervalPanel.Size = new System.Drawing.Size(243, 95);
             this.IntervalPanel.TabIndex = 10;
@@ -144,7 +147,7 @@
             // NumberOfDaysPanel
             // 
             this.NumberOfDaysPanel.Controls.Add(this.NumberOfDaysEntry);
-            this.NumberOfDaysPanel.Location = new System.Drawing.Point(12, 82);
+            this.NumberOfDaysPanel.Location = new System.Drawing.Point(12, 126);
             this.NumberOfDaysPanel.Name = "NumberOfDaysPanel";
             this.NumberOfDaysPanel.Size = new System.Drawing.Size(244, 36);
             this.NumberOfDaysPanel.TabIndex = 11;
@@ -156,11 +159,42 @@
             this.NumberOfDaysEntry.Size = new System.Drawing.Size(120, 20);
             this.NumberOfDaysEntry.TabIndex = 12;
             // 
+            // TimeZoneDropDown
+            // 
+            this.TimeZoneDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TimeZoneDropDown.FormattingEnabled = true;
+            this.TimeZoneDropDown.Location = new System.Drawing.Point(12, 76);
+            this.TimeZoneDropDown.Name = "TimeZoneDropDown";
+            this.TimeZoneDropDown.Size = new System.Drawing.Size(244, 21);
+            this.TimeZoneDropDown.TabIndex = 12;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 60);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "TimeZone";
+            // 
+            // OptionsButton
+            // 
+            this.OptionsButton.Location = new System.Drawing.Point(155, 295);
+            this.OptionsButton.Name = "OptionsButton";
+            this.OptionsButton.Size = new System.Drawing.Size(75, 23);
+            this.OptionsButton.TabIndex = 14;
+            this.OptionsButton.Text = "Options";
+            this.OptionsButton.UseVisualStyleBackColor = true;
+            this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
+            // 
             // MasterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 286);
+            this.ClientSize = new System.Drawing.Size(294, 338);
+            this.Controls.Add(this.OptionsButton);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.TimeZoneDropDown);
             this.Controls.Add(this.analyzeByIntervalRadio);
             this.Controls.Add(this.analyzeByDaysRadio);
             this.Controls.Add(this.NumberOfDaysPanel);
@@ -194,6 +228,9 @@
         private System.Windows.Forms.Panel IntervalPanel;
         private System.Windows.Forms.Panel NumberOfDaysPanel;
         private System.Windows.Forms.NumericUpDown NumberOfDaysEntry;
+        private System.Windows.Forms.ComboBox TimeZoneDropDown;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button OptionsButton;
     }
 }
 

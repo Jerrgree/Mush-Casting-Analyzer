@@ -13,14 +13,17 @@ namespace Mush_Casting_Analyzer
     public partial class Results : Form
     {
         private Dictionary<int, UserStatusReport> userStatusReport;
+        private TimeZoneInfo TimeZone;
 
-        public Results()
+        public Results(TimeZoneInfo timeZone)
         {
             InitializeComponent();
 
             ResultsTabControl.TabPages[0].Text = "Readied -> Idle";
             ResultsTabControl.TabPages[1].Text = "Readied -> In Game";
             ResultsTabControl.TabPages[2].Text = "Unchanged";
+
+            TimeZone = timeZone;
         }
 
         public void AnalyzeData(int days, ref List<CastingDataInstances> Data)
@@ -157,6 +160,17 @@ namespace Mush_Casting_Analyzer
                     userInstance.Value.StatusChanges.Add(new UserStatusTimeStamp(userStatus.Removed, time));
                 }
             }
+        }
+
+        public void publishData()
+        {
+
+        }
+
+        public static DateTime FromEpochTime(long TimeStamp, TimeZoneInfo zone)
+        {
+            DateTime retValue = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(TimeStamp);
+            return TimeZoneInfo.ConvertTimeFromUtc(retValue, zone);
         }
     }
 }
