@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mush_Casting_Bookkeeping"
         mc:Ignorable="d"
-        Title="Results" Height="300" Width="300" Icon="GUIIcon.ico">
+        Title="Results" Height="500" Width="400" Icon="GUIIcon.ico">
     <Grid Background="Gray">
-        <ScrollViewer IsTabStop="True" Width="282" IsEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
+        <ScrollViewer IsTabStop="True" Width="350" IsEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
                 <StackPanel Name="stack" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </ScrollViewer>
     </Grid>
