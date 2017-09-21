@@ -210,7 +210,10 @@ namespace Mush_Casting_Bookkeeping
             userDetailView.Columns.Add("Status", typeof(string));
             userDetailView.Columns.Add("Date", typeof(string));
 
-            foreach (KeyValuePair<int, UserStatusReport> userInstance in userStatusReport)
+            List<KeyValuePair<int, UserStatusReport>> list = userStatusReport.ToList();
+            list.Sort((pair1, pair2) => pair1.Value.UserName.CompareTo(pair2.Value.UserName));
+
+            foreach (KeyValuePair<int, UserStatusReport> userInstance in list)
             {
                 int id = userInstance.Key;
                 masterDetailView.Rows.Add(id, userInstance.Value.UserName);

@@ -39,7 +39,7 @@ namespace Mush_Casting_Bookkeeping
         }
     }
 
-    public class UserStatusReport
+    public class UserStatusReport : IComparable<UserStatusReport>
     {
         public string UserName { get; set; }
 
@@ -53,6 +53,11 @@ namespace Mush_Casting_Bookkeeping
             StatusChanges = new List<UserStatusTimeStamp>();
             StatusChanges.Add(new UserStatusTimeStamp(status, timeStamp));
             LastRecordedTimeStamp = timeStamp;
+        }
+
+        public int CompareTo(UserStatusReport rhs)
+        {
+            return UserName.CompareTo(rhs.UserName);
         }
     }
 }

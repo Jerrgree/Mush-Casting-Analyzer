@@ -25,8 +25,8 @@
         </GroupBox>
         <RadioButton x:Name="analyzeByDaysRadio" Grid.ColumnSpan="2" Content="Analyze By Days" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Checked="analyzeByDaysRadio_Checked"/>
         <RadioButton x:Name="analyzeByTimeSpanRadio" Grid.ColumnSpan="2" Content="Analyze By TimeSpan" HorizontalAlignment="Left" Margin="37,174,0,0" VerticalAlignment="Top" Checked="analyzeByTimeSpanRadio_Checked"/>
-        <ComboBox x:Name="TimeZoneDropDown" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="205,101,0,0" VerticalAlignment="Top" Width="190" />
-        <CheckBox x:Name="TimeFormatCheckbox" Grid.ColumnSpan="2" Content="24hr Time?" HorizontalAlignment="Left" Margin="400,101,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="TimeZoneDropDown" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="205,101,0,0" VerticalAlignment="Top" Width="302" />
+        <CheckBox x:Name="TimeFormatCheckbox" Grid.ColumnSpan="2" Content="24hr Time?" HorizontalAlignment="Left" Margin="276,76,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label" Grid.ColumnSpan="2" Content="Time Zone" HorizontalAlignment="Left" Margin="205,70,0,0" VerticalAlignment="Top"/>
         <Button x:Name="optionsBTN" Grid.ColumnSpan="2" Content="Options" HorizontalAlignment="Left" Margin="115,370,0,0" VerticalAlignment="Top" Width="75" Click="optionsBTN_Click"/>
 
