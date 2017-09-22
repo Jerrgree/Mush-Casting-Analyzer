@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mush Casting Bookkeeping", "Mush Casting Bookkeeping\Mush Casting Bookkeeping.csproj", "{2B4F16B7-8124-4DAC-A012-DF2C3B4EA739}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Mush Casting Bookkeeping Setup", "Setup1\Setup1.vdproj", "{741E84C8-409B-4EAB-BA03-22B0E1368014}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B4F16B7-8124-4DAC-A012-DF2C3B4EA739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4F16B7-8124-4DAC-A012-DF2C3B4EA739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4F16B7-8124-4DAC-A012-DF2C3B4EA739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4F16B7-8124-4DAC-A012-DF2C3B4EA739}.Release|Any CPU.Build.0 = Release|Any CPU
+		{741E84C8-409B-4EAB-BA03-22B0E1368014}.Debug|Any CPU.ActiveCfg = Debug
+		{741E84C8-409B-4EAB-BA03-22B0E1368014}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

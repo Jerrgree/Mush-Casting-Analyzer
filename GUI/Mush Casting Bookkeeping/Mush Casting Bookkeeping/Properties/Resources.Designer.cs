@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mush_Casting_Analyzer.Properties
+namespace Mush_Casting_Bookkeeping.Properties
 {
 
 
@@ -44,7 +44,7 @@ namespace Mush_Casting_Analyzer.Properties
             {
                 if ((resourceMan == null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Mush_Casting_Analyzer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Mush_Casting_Bookkeeping.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

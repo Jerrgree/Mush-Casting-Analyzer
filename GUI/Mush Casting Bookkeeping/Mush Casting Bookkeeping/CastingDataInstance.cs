@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Mush_Casting_Analyzer
+namespace Mush_Casting_Bookkeeping
 {
     public class CastingDataInstances : IComparable<CastingDataInstances>
     {
         private string _castingName;
         private long _timeStamp;
-        private List <User> _readiedUsers;
-        private List <User> _idleUsers;
-        private List <User> _playingUsers;
+        private List<User> _readiedUsers;
+        private List<User> _idleUsers;
+        private List<User> _playingUsers;
 
         public long TimeStamp
         {
