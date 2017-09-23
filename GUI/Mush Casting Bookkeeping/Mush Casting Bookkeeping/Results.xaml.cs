@@ -56,16 +56,18 @@ namespace Mush_Casting_Bookkeeping
 
             Data.Sort();
 
-
-            foreach (User user in Data.First().MasterUserList)
-            {
-                InitialUsers.Add(user.ID);
-            }
-
             foreach (CastingDataInstances dataPoint in Data)
             {
                 if (dataPoint.TimeStamp >= endTime)
                 {
+                    if (userStatusReport.Count == 0)
+                    {
+                        foreach (User user in Data.First().MasterUserList)
+                        {
+                            InitialUsers.Add(user.ID);
+                        }
+                    }
+
                     AnalyzeInstance(dataPoint);
                 }
             }
@@ -73,7 +75,7 @@ namespace Mush_Casting_Bookkeeping
             publishDetailReport();
         }
 
-        public void AnalyzeData(long startTime, long endTime, ref List<CastingDataInstances> Data)
+        public void AnalyzeData(DateTime startTime, DateTime endTime, ref List<CastingDataInstances> Data)
         {
             userStatusReport = new Dictionary<int, UserStatusReport>();
 
@@ -86,8 +88,17 @@ namespace Mush_Casting_Bookkeeping
 
             foreach (CastingDataInstances dataPoint in Data)
             {
-                if (dataPoint.TimeStamp <= endTime && dataPoint.TimeStamp >= startTime)
+                DateTime instanceDate = FromEpochTime(dataPoint.TimeStamp);
+                if (instanceDate.Date <= endTime.Date && instanceDate.Date >= startTime.Date)
                 {
+                    if (userStatusReport.Count == 0)
+                    {
+                        foreach (User user in Data.First().MasterUserList)
+                        {
+                            InitialUsers.Add(user.ID);
+                        }
+                    }
+
                     AnalyzeInstance(dataPoint);
                 }
             }
