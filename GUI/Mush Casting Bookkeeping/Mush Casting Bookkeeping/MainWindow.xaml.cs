@@ -75,16 +75,30 @@ namespace Mush_Casting_Bookkeeping
         {
             try
             {
-                NumberOfDays = Int32.Parse(NumberOfDaysEntry.Text);
                 bool isValid;
-                List<CastingDataInstances> data = LoadData(out isValid);
+                List<CastingDataInstances> data = Validate(out isValid);
 
-                if (isValid)
+                if (!isValid)
                 {
-                    Results frm = new Results((TimeZoneInfo)TimeZoneDropDown.SelectedItem, TimeFormatCheckbox.IsChecked.Value);
-                    frm.AnalyzeData(NumberOfDays, ref data);
-                    frm.ShowDialog();
+                    return;
                 }
+
+                Results frm = new Results((TimeZoneInfo)TimeZoneDropDown.SelectedItem, TimeFormatCheckbox.IsChecked.Value);
+                if (analyzeByDaysRadio.IsChecked.Value)
+                {
+                    frm.AnalyzeData(NumberOfDays, ref data);
+                }
+
+                else
+                {
+                    frm.AnalyzeData
+                        (
+                        (long)(startDatePicker.SelectedDate.Value - new DateTime(1970, 1, 1)).TotalMilliseconds,
+                        (long)(endDatePicker.SelectedDate.Value - new DateTime(1970, 1, 1)).TotalMilliseconds,
+                        ref data
+                        );
+                }                   
+                    frm.ShowDialog();
             }
 
             catch
@@ -144,6 +158,43 @@ namespace Mush_Casting_Bookkeeping
 
             isValid = true;
             return dataInstances;
+        }
+
+        private List<CastingDataInstances> Validate(out bool isValid)
+        {
+            isValid = true;
+
+            if (analyzeByDaysRadio.IsChecked.Value)
+            {
+                try
+                {
+                    NumberOfDays = Int32.Parse(NumberOfDaysEntry.Text);
+                }
+
+                catch
+                {
+                    // NumberOfDays must be an integer
+                    isValid = false;
+                }
+
+                if (isValid && NumberOfDays < 1)
+                {
+                    // NumberOfDays must be greater than zero
+                    isValid = false;
+                }
+            }
+            
+            else
+            {
+                if (endDatePicker.SelectedDate.Value < startDatePicker.SelectedDate.Value)
+                {
+                    // End Date must be after start date
+                    isValid = false;
+                }
+            }
+            
+            List<CastingDataInstances> data = LoadData(out isValid);
+            return data;
         }
     }
 }

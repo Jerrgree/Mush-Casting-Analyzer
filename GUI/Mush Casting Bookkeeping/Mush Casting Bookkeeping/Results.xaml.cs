@@ -22,6 +22,8 @@ namespace Mush_Casting_Bookkeeping
         private Dictionary<int, UserStatusReport> userStatusReport;
         private TimeZoneInfo _timeZone;
         private bool TimeIn24hrs;
+        private string CastingName;
+        private List<int> InitialUsers;
 
         public TimeZoneInfo TimeZone
         {
@@ -42,25 +44,29 @@ namespace Mush_Casting_Bookkeeping
 
             TimeZone = timeZone;
             TimeIn24hrs = timeIn24hrs;
+            InitialUsers = new List<int>();
         }
 
         public void AnalyzeData(int days, ref List<CastingDataInstances> Data)
         {
+            CastingName = Data[0].CastingName;
             userStatusReport = new Dictionary<int, UserStatusReport>();
 
             long endTime = (long)(DateTime.Now.AddDays(-days) - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
 
             Data.Sort();
 
+
+            foreach (User user in Data.First().MasterUserList)
+            {
+                InitialUsers.Add(user.ID);
+            }
+
             foreach (CastingDataInstances dataPoint in Data)
             {
-                if (dataPoint.TimeStamp > endTime)
+                if (dataPoint.TimeStamp >= endTime)
                 {
-                    AnalyzeInstance(dataPoint, ref Data);
-                }
-                else
-                {
-                    break;
+                    AnalyzeInstance(dataPoint);
                 }
             }
 
@@ -73,20 +79,30 @@ namespace Mush_Casting_Bookkeeping
 
             Data.Sort();
 
+            foreach (User user in Data.First().MasterUserList)
+            {
+                InitialUsers.Add(user.ID);
+            }
+
             foreach (CastingDataInstances dataPoint in Data)
             {
-
+                if (dataPoint.TimeStamp <= endTime && dataPoint.TimeStamp >= startTime)
+                {
+                    AnalyzeInstance(dataPoint);
+                }
             }
+
+            publishDetailReport();
         }
 
-        private void AnalyzeInstance(CastingDataInstances dataPoint, ref List<CastingDataInstances> Data)
+        private void AnalyzeInstance(CastingDataInstances dataPoint)
         {
             long time = dataPoint.TimeStamp;
             foreach (User idlePlayer in dataPoint.IdleUsers)
             {
                 if (!userStatusReport.ContainsKey(idlePlayer.ID))
                 {
-                    if (dataPoint == Data.First())
+                    if (InitialUsers.Contains(idlePlayer.ID))
                     {
                         userStatusReport[idlePlayer.ID] = new UserStatusReport
                             (
@@ -122,7 +138,7 @@ namespace Mush_Casting_Bookkeeping
             {
                 if (!userStatusReport.ContainsKey(readiedPlayer.ID))
                 {
-                    if (dataPoint == Data.First())
+                    if (InitialUsers.Contains(readiedPlayer.ID))
                     {
                         userStatusReport[readiedPlayer.ID] = new UserStatusReport
                             (
@@ -158,7 +174,7 @@ namespace Mush_Casting_Bookkeeping
             {
                 if (!userStatusReport.ContainsKey(inGamePlayer.ID))
                 {
-                    if (dataPoint == Data.First())
+                    if (InitialUsers.Contains(inGamePlayer.ID))
                     {
                         userStatusReport[inGamePlayer.ID] = new UserStatusReport
                             (
@@ -201,6 +217,15 @@ namespace Mush_Casting_Bookkeeping
 
         private void publishDetailReport()
         {
+            string titleMessage;
+            titleMessage = CastingName + " user detailed report\n" + "run on " + DateTime.Now;
+
+
+            Label title = new Label();
+            title.Content = titleMessage;
+            stack.Children.Add(title);
+
+
             DataTable masterDetailView = new DataTable();
             masterDetailView.Columns.Add("User ID", typeof(int));
             masterDetailView.Columns.Add("User Name", typeof(string));
@@ -223,11 +248,11 @@ namespace Mush_Casting_Bookkeeping
                     DateTime InstanceTime = FromEpochTime(StatusChange.TimeStamp);
                     if (TimeIn24hrs)
                     {
-                        userDetailView.Rows.Add(id, StatusChange.Status.ToString(), InstanceTime.ToString("yyyy-MM-d : HH-mm-ss"));
+                        userDetailView.Rows.Add(id, StatusChange.Status.ToString(), InstanceTime.ToString("yyyy-MM-d -- HH:mm:ss"));
                     }
                     else
                     {
-                        userDetailView.Rows.Add(id, StatusChange.Status.ToString(), InstanceTime.ToString("yyyy-MM-d : hh-mm-ss tt"));
+                        userDetailView.Rows.Add(id, StatusChange.Status.ToString(), InstanceTime.ToString("yyyy-MM-d -- hh:mm:ss tt"));
                     }
                 }
             }
