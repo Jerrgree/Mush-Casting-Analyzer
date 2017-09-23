@@ -14,6 +14,7 @@ namespace Mush_Casting_Bookkeeping
         private List<User> _readiedUsers;
         private List<User> _idleUsers;
         private List<User> _playingUsers;
+        private List<User> _masterUserList;
 
         public long TimeStamp
         {
@@ -55,11 +56,25 @@ namespace Mush_Casting_Bookkeeping
             }
         }
 
+        public List<User> MasterUserList
+        {
+            get
+            {
+                return _masterUserList;
+            }
+
+            set
+            {
+                _masterUserList = value;
+            }
+        }
+
         public CastingDataInstances(string file)
         {
             _readiedUsers = new List<User>();
             _idleUsers = new List<User>();
             _playingUsers = new List<User>();
+            _masterUserList = new List<User>();
             var reader = new StreamReader(file);
 
             string line = reader.ReadLine();
@@ -81,6 +96,7 @@ namespace Mush_Casting_Bookkeeping
                 values[2] = values[2].Trim();
 
                 User _user = new User(values[0], values[1], values[2]);
+                _masterUserList.Add(_user);
 
                 if (values[2] == "ready")
                 {
